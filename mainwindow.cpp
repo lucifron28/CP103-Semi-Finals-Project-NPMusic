@@ -239,8 +239,7 @@ void MainWindow::playNextInQueue()
 
     QString currentTrackName = player->source().fileName();
     if (!currentTrackName.isEmpty()) {
-        // Check if the current track is already the last track in the stack
-        if (stack.isEmpty() || stack.top().trackName != currentTrackName) {
+        if (stack.isEmpty() || stack.pop().trackName != currentTrackName) {
             TrackInfo currentTrack = { currentTrackName, "Unknown Artist" };
             stack.push(currentTrack);
             addSongToHistory(currentTrack);
