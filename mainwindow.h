@@ -6,6 +6,9 @@
 #include <QtCore>
 #include <QtWidgets>
 #include <QStringList>
+#include "npqueue.h"
+#include "npstack.h"
+#include "trackinfo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,27 +25,29 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButtonVolume_clicked();
-
-    void on_pushButtonBack_clicked();
-
-    void on_pushButtonStop_clicked();
-
-    void on_pushButtonForward_clicked();
-
-    void on_verticalSliderVolume_valueChanged(int value);
-
-    void on_pushButtonPlayPause_clicked();
-
-    void on_horizontalSliderDuration_sliderMoved(int value);
-    void on_horizontalSliderDuration_sliderReleased();
+    void handleVolumeButton();
+    void handleBackButton();
+    void handleStopButton();
+    void handleForwardButton();
+    void handlePlayPauseButton();
+    void handleVolumeSliderChange(int value);
+    void handleDurationSliderMove(int value);
+    void handleDurationSliderRelease();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 position);
+    void addSongToQueue(int row, int column);
+    void playNextInQueue();
+    void updateCurrentlyPlayingLabel();
+    void handlePlaybackStateChanged(QMediaPlayer::PlaybackState state);
+    void updateSongQueueTable();
+
+    void on_actionSelect_File_mp3_triggered();
 
 private:
     Ui::MainWindow *ui;
     bool is_muted = false;
     bool paused = true;
+    bool playNextInQueueInProgress = false; // Add this flag
     qint64 Mduration;
     QString buttonStyle = "QPushButton::hover {"
                               "background-color: rgba(0, 0, 0, 0.5);}"
@@ -51,11 +56,16 @@ private:
                             "background-color: white;"
                             "border: 2px solid black;}"
                           "QPushButton::pressed {"
-                            "background-color: white}";
+                            "background-color: white};";
     QStringList headers;
     QMediaPlayer *player;
     QAudioOutput *audioOutput;
     void listMp3Files(const QString &directoryPath);
     void playMp3File(const QString &filePath);
+    void addMp3FileToDirectory(const QString &filePath);
+    void addSongToHistory(const TrackInfo &trackInfo);
+    npstack stack;
+    npqueue queue;
 };
+
 #endif // MAINWINDOW_H

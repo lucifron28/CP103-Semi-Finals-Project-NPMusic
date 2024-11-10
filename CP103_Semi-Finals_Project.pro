@@ -10,10 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    npqueue.cpp \
+    npstack.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    npqueue.h \
+    npstack.h \
+    trackinfo.h
 
 FORMS += \
     mainwindow.ui
