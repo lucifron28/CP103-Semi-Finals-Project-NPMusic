@@ -35,7 +35,7 @@ private slots:
     void handleDurationSliderRelease();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 position);
-    void addSongToQueue(int row, int column);
+    void addSongToQueue(QListWidgetItem *item);
     void playNextInQueue();
     void updateCurrentlyPlayingLabel();
     void handlePlaybackStateChanged(QMediaPlayer::PlaybackState state);
@@ -43,9 +43,9 @@ private slots:
     void handlePushButtonEditTrackInfo();
     void handleRemoveSongFromQueue();
     void clearQueue();
-    void handleAllSongsCellChanged(int row, int column);
-
+    void handleAllSongsCellChanged(int row);
     void on_actionSelect_File_mp3_triggered();
+    void editList();
 
     void on_actionClear_History_triggered();
 
@@ -54,7 +54,6 @@ private:
     bool is_muted = false;
     bool paused = true;
     bool playNextInQueueInProgress = false;
-    bool isEditingTrackInfo = false;
     bool stopButtonPressed = false; // New flag to indicate stop button pressed
     bool backButtonPressed = false; // New flag to indicate back button pressed
     qint64 Mduration;

@@ -6,11 +6,11 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , backButtonPressed(false)
     , player(new QMediaPlayer(this))
     , audioOutput(new QAudioOutput(this))
     , stack()
-    , queue()
-    , backButtonPressed(false) // Add this flag
+    , queue() // Add this flag
 {
     ui->setupUi(this);
     player->setAudioOutput(audioOutput);
@@ -35,17 +35,11 @@ MainWindow::MainWindow(QWidget *parent)
                                         "QPushButton::pressed {"
                                         "background-color: white};");
 
-    ui->tableWidgetAllSongs->setColumnCount(2);
     ui->tableWidgetHistory->setColumnCount(2);
-    ui->tableWidgetAllSongs->setHorizontalHeaderLabels(QStringList() << "Track" << "Artist");
     ui->tableWidgetHistory->setHorizontalHeaderLabels(QStringList() << "Track" << "Artist");
-    int totalwidth = ui->tableWidgetAllSongs->width();
-    ui->tableWidgetAllSongs->setColumnWidth(0, totalwidth * 0.5);
-    ui->tableWidgetAllSongs->setColumnWidth(1, totalwidth * 0.5);
 
-    ui->tableWidgetAllSongs->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     ui->tableWidgetSongQueue->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableWidgetAllSongs->verticalHeader()->setVisible(false);
 
     ui->tableWidgetSongQueue->setColumnCount(2);
     headers << "Track" << "Artist";
@@ -54,11 +48,15 @@ MainWindow::MainWindow(QWidget *parent)
     int tableHistoryWidth = ui->tableWidgetHistory->width();
     ui->tableWidgetHistory->setColumnWidth(0, tableHistoryWidth * 0.6);
     ui->tableWidgetHistory->setColumnWidth(1, tableHistoryWidth * 0.4);
-
+    int totalwidth = ui->tableWidgetSongQueue->width();
     ui->tableWidgetSongQueue->setColumnWidth(0, totalwidth * 0.6);
     ui->tableWidgetSongQueue->setColumnWidth(1, totalwidth * 0.4);
 
     qDebug() << "Current working directory:" << QDir::currentPath();
+
+    // Ensure listWidgetAllSongs allows item selection
+    ui->listWidgetAllSongs->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->listWidgetAllSongs->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     QString musicDirectory = "..\\..\\music";
     listMp3Files(musicDirectory);
@@ -67,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->verticalSliderVolume->setMaximum(100);
     ui->verticalSliderVolume->setValue(50);
 
-    connect(ui->pushButtonEditTrackInfo, &QPushButton::clicked, this, &MainWindow::handlePushButtonEditTrackInfo);
+    connect(ui->pushButtonEditTrackInfo, &QPushButton::clicked, this, &MainWindow::editList);
     connect(ui->pushButtonVolume, &QPushButton::clicked, this, &MainWindow::handleVolumeButton);
     connect(ui->pushButtonBack, &QPushButton::clicked, this, &MainWindow::handleBackButton);
     connect(ui->pushButtonStop, &QPushButton::clicked, this, &MainWindow::handleStopButton);
@@ -79,12 +77,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->horizontalSliderDuration, &QSlider::sliderReleased, this, &MainWindow::handleDurationSliderRelease);
     connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
     connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
-    connect(ui->tableWidgetAllSongs, &QTableWidget::cellDoubleClicked, this, &MainWindow::addSongToQueue);
     connect(player, &QMediaPlayer::sourceChanged, this, &MainWindow::updateCurrentlyPlayingLabel);
     connect(player, &QMediaPlayer::playbackStateChanged, this, &MainWindow::handlePlaybackStateChanged);
     connect(ui->pushButtonRemoveSong, &QPushButton::clicked, this, &MainWindow::handleRemoveSongFromQueue);
     connect(ui->pushButtonClearQueue, &QPushButton::clicked, this, &MainWindow::clearQueue);
-    connect(ui->tableWidgetAllSongs, &QTableWidget::cellChanged, this, &MainWindow::handleAllSongsCellChanged);
+    connect(ui->listWidgetAllSongs, &QListWidget::itemDoubleClicked, this, &MainWindow::addSongToQueue);
 }
 
 MainWindow::~MainWindow()
@@ -119,11 +116,10 @@ void MainWindow::listMp3Files(const QString &directoryPath) {
     } else {
         foreach (QString filename, mp3Files) {
             qDebug() << filename;
-            // Add song to tableWidgetAllSongs
-            int row = ui->tableWidgetAllSongs->rowCount();
-            ui->tableWidgetAllSongs->insertRow(row);
-            ui->tableWidgetAllSongs->setItem(row, 0, new QTableWidgetItem(filename));
-            ui->tableWidgetAllSongs->setItem(row, 1, new QTableWidgetItem("Unknown Artist"));
+            // Add song to listWidgetAllSongs
+            QListWidgetItem *item = new QListWidgetItem(filename, ui->listWidgetAllSongs);
+            item->setData(Qt::UserRole, "Unknown Artist");
+            item->setData(Qt::UserRole + 1, filename); // Store the original filename
         }
     }
 }
@@ -214,6 +210,7 @@ void MainWindow::handlePlayPauseButton()
 void MainWindow::handleVolumeSliderChange(int value)
 {
     audioOutput->setVolume(value / 100.0);
+    ui->labelVolume->setText(QString::number(value) + "%");
 }
 
 void MainWindow::handleDurationSliderMove(int value)
@@ -226,11 +223,10 @@ void MainWindow::handleDurationSliderRelease()
     player->setPosition(ui->horizontalSliderDuration->value());
 }
 
-void MainWindow::addSongToQueue(int row, int column)
+void MainWindow::addSongToQueue(QListWidgetItem *item)
 {
-    Q_UNUSED(column);
-    QString track = ui->tableWidgetAllSongs->item(row, 0)->text();
-    QString artist = ui->tableWidgetAllSongs->item(row, 1)->text();
+    QString track = item->data(Qt::UserRole + 1).toString(); // Get the original filename
+    QString artist = item->data(Qt::UserRole).toString();
 
     int queueRow = ui->tableWidgetSongQueue->rowCount();
     ui->tableWidgetSongQueue->insertRow(queueRow);
@@ -344,10 +340,9 @@ void MainWindow::addMp3FileToDirectory(const QString &filePath)
     if (QFile::copy(filePath, destinationPath)) {
         qDebug() << "File copied to: " << destinationPath;
 
-        int row = ui->tableWidgetAllSongs->rowCount();
-        ui->tableWidgetAllSongs->insertRow(row);
-        ui->tableWidgetAllSongs->setItem(row, 0, new QTableWidgetItem(fileName));
-        ui->tableWidgetAllSongs->setItem(row, 1, new QTableWidgetItem("Unknown Artist"));
+        // Add song to listWidgetAllSongs
+        QListWidgetItem *item = new QListWidgetItem(fileName, ui->listWidgetAllSongs);
+        item->setData(Qt::UserRole, "Unknown Artist");
     } else {
         qDebug() << "Failed to copy file to: " << destinationPath;
     }
@@ -364,14 +359,7 @@ void MainWindow::addSongToHistory(const TrackInfo &trackInfo)
 
 void MainWindow::handlePushButtonEditTrackInfo()
 {
-    if (isEditingTrackInfo) {
-        ui->tableWidgetAllSongs->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        ui->pushButtonEditTrackInfo->setText("Edit Track Info");
-    } else {
-        ui->tableWidgetAllSongs->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::SelectedClicked);
-        ui->pushButtonEditTrackInfo->setText("Save Track Info");
-    }
-    isEditingTrackInfo = !isEditingTrackInfo;
+    
 }
 
 void MainWindow::handleRemoveSongFromQueue()
@@ -398,13 +386,10 @@ void MainWindow::on_actionClear_History_triggered()
     ui->tableWidgetHistory->setRowCount(0);
 }
 
-void MainWindow::handleAllSongsCellChanged(int row, int column)
+void MainWindow::handleAllSongsCellChanged(int row)
 {
-    Q_UNUSED(row);
-    Q_UNUSED(column);
-
-    QString track = ui->tableWidgetAllSongs->item(row, 0)->text();
-    QString artist = ui->tableWidgetAllSongs->item(row, 1)->text();
+    QString track = ui->listWidgetAllSongs->item(row)->text();
+    QString artist = ui->listWidgetAllSongs->item(row)->data(Qt::UserRole).toString();
 
     // Update Song Queue Table
     for (int i = 0; i < ui->tableWidgetSongQueue->rowCount(); ++i) {
@@ -435,3 +420,21 @@ void MainWindow::handleAllSongsCellChanged(int row, int column)
     }
 }
 
+void MainWindow::editList()
+{
+    QListWidgetItem *currentItem = ui->listWidgetAllSongs->currentItem();
+    if (currentItem) {
+        QString track = currentItem->data(Qt::UserRole + 1).toString(); // Get the original filename
+        QString artist = currentItem->data(Qt::UserRole).toString();
+
+        bool ok;
+        QString newArtist = QInputDialog::getText(this, tr("Edit Artist"),
+                                                  tr("Artist:"), QLineEdit::Normal,
+                                                  artist, &ok);
+        if (ok && !newArtist.isEmpty()) {
+            currentItem->setData(Qt::UserRole, newArtist);
+            currentItem->setText(track + " - " + newArtist);
+            handleAllSongsCellChanged(ui->listWidgetAllSongs->row(currentItem)); // Ensure history table updates
+        }
+    }
+}
