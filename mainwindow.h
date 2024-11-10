@@ -40,14 +40,22 @@ private slots:
     void updateCurrentlyPlayingLabel();
     void handlePlaybackStateChanged(QMediaPlayer::PlaybackState state);
     void updateSongQueueTable();
+    void handlePushButtonEditTrackInfo();
+    void handleRemoveSongFromQueue();
+    void clearQueue();
+    void handleAllSongsCellChanged(int row, int column);
 
     void on_actionSelect_File_mp3_triggered();
+
+    void on_actionClear_History_triggered();
 
 private:
     Ui::MainWindow *ui;
     bool is_muted = false;
     bool paused = true;
-    bool playNextInQueueInProgress = false; // Add this flag
+    bool playNextInQueueInProgress = false;
+    bool isEditingTrackInfo = false;
+    bool stopButtonPressed = false; // New flag to indicate stop button pressed
     qint64 Mduration;
     QString buttonStyle = "QPushButton::hover {"
                               "background-color: rgba(0, 0, 0, 0.5);}"

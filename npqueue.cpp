@@ -1,5 +1,7 @@
 #include "npqueue.h"
+#include "trackinfo.h"
 #include <stdexcept>
+#include <algorithm>
 
 void npqueue::enqueue(const TrackInfo& value) {
     arr.push_back(value);
@@ -23,4 +25,16 @@ TrackInfo npqueue::front() const {
 
 bool npqueue::isEmpty() const {
     return arr.empty();
+}
+
+void npqueue::remove(const TrackInfo& value) {
+    auto it = std::find(arr.begin(), arr.end(), value);
+    if (it != arr.end()) {
+        arr.erase(it);
+    }
+}
+
+void npqueue::clear()
+{
+    arr.clear();
 }

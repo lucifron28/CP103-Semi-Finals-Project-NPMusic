@@ -11,12 +11,15 @@ public:
     TrackInfo dequeue();
     TrackInfo front() const;
     bool isEmpty() const;
+    void clear();
 
     // Iterator support
     std::vector<TrackInfo>::iterator begin() { return arr.begin(); }
     std::vector<TrackInfo>::iterator end() { return arr.end(); }
     std::vector<TrackInfo>::const_iterator begin() const { return arr.begin(); }
     std::vector<TrackInfo>::const_iterator end() const { return arr.end(); }
+
+    void remove(const TrackInfo& value);
 
 private:
     std::vector<TrackInfo> arr;

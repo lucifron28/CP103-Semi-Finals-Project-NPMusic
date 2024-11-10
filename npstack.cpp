@@ -24,3 +24,16 @@ TrackInfo npstack::peek() const {
 bool npstack::isEmpty() const {
     return arr.empty();
 }
+
+void npstack::clear()
+{
+    arr.clear();
+}
+
+std::vector<TrackInfo>::iterator npstack::begin() {
+    return arr.begin();
+}
+
+std::vector<TrackInfo>::iterator npstack::end() {
+    return arr.end();
+}

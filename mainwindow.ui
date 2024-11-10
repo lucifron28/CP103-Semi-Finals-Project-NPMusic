@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabPlaylist">
      <attribute name="title">
@@ -211,6 +211,58 @@ border: 2px solid black;
        <string>Currently Playing</string>
       </property>
      </widget>
+     <widget class="QLabel" name="labelTrackPhoto">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>150</y>
+        <width>311</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonEditTrackInfo">
+      <property name="geometry">
+       <rect>
+        <x>1380</x>
+        <y>450</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edit</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonRemoveSong">
+      <property name="geometry">
+       <rect>
+        <x>990</x>
+        <y>450</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonClearQueue">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>450</y>
+        <width>101</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear Queue</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabHistory">
      <attribute name="title">
@@ -219,8 +271,8 @@ border: 2px solid black;
      <widget class="QTableWidget" name="tableWidgetHistory">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>50</y>
+        <x>220</x>
+        <y>40</y>
         <width>1031</width>
         <height>551</height>
        </rect>
@@ -241,15 +293,21 @@ border: 2px solid black;
    </property>
    <widget class="QMenu" name="menuAdd_Song">
     <property name="title">
-     <string>Add Song</string>
+     <string>Menu</string>
     </property>
     <addaction name="actionSelect_File_mp3"/>
+    <addaction name="actionClear_History"/>
    </widget>
    <addaction name="menuAdd_Song"/>
   </widget>
   <action name="actionSelect_File_mp3">
    <property name="text">
     <string>Select File (.mp3)</string>
+   </property>
+  </action>
+  <action name="actionClear_History">
+   <property name="text">
+    <string>Clear History</string>
    </property>
   </action>
  </widget>
