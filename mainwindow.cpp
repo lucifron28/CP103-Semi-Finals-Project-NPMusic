@@ -397,7 +397,14 @@ void MainWindow::on_actionClear_History_triggered()
 
 void MainWindow::handleAllSongsCellChanged(int row, int column)
 {
+    Q_UNUSED(row);
     Q_UNUSED(column);
+
+    QString track = ui->tableWidgetAllSongs->item(row, 0)->text();
+    QString artist = ui->tableWidgetAllSongs->item(row, 1)->text();
+
+    // Update Song Queue Table
+    for (int i = 0; i < ui->tableWidgetSongQueue->rowCount(); ++i) {
         if (ui->tableWidgetSongQueue->item(i, 0)->text() == track) {
             ui->tableWidgetSongQueue->setItem(i, 1, new QTableWidgetItem(artist));
         }
