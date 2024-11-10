@@ -341,8 +341,9 @@ void MainWindow::addMp3FileToDirectory(const QString &filePath)
         qDebug() << "File copied to: " << destinationPath;
 
         // Add song to listWidgetAllSongs
-        QListWidgetItem *item = new QListWidgetItem(fileName, ui->listWidgetAllSongs);
+        QListWidgetItem *item = new QListWidgetItem(fileName + " - Unknown Artist", ui->listWidgetAllSongs);
         item->setData(Qt::UserRole, "Unknown Artist");
+        item->setData(Qt::UserRole + 1, fileName); // Store the original filename
     } else {
         qDebug() << "Failed to copy file to: " << destinationPath;
     }
