@@ -56,6 +56,7 @@ private:
     bool playNextInQueueInProgress = false;
     bool isEditingTrackInfo = false;
     bool stopButtonPressed = false; // New flag to indicate stop button pressed
+    bool backButtonPressed = false; // New flag to indicate back button pressed
     qint64 Mduration;
     QString buttonStyle = "QPushButton::hover {"
                               "background-color: rgba(0, 0, 0, 0.5);}"

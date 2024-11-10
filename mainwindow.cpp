@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , audioOutput(new QAudioOutput(this))
     , stack()
     , queue()
+    , backButtonPressed(false) // Add this flag
 {
     ui->setupUi(this);
     player->setAudioOutput(audioOutput);
@@ -146,7 +147,10 @@ void MainWindow::handlePlaybackStateChanged(QMediaPlayer::PlaybackState state)
 {
     qDebug() << "Player state changed to:" << state;
     if (state == QMediaPlayer::StoppedState && !stopButtonPressed) {
-        playNextInQueue();
+        if (!backButtonPressed) { // Check the flag before calling playNextInQueue
+            playNextInQueue();
+        }
+        backButtonPressed = false; // Reset the flag
     }
     stopButtonPressed = false;
 }
@@ -167,13 +171,12 @@ void MainWindow::handleVolumeButton()
 void MainWindow::handleBackButton()
 {
     if (!stack.isEmpty()) {
-        TrackInfo previousTrack = stack.peek();
+        backButtonPressed = true; // Set the flag when back button is pressed
+        TrackInfo previousTrack = stack.pop();
         qDebug() << "Popped track from history:" << previousTrack.trackName << ", Artist:" << previousTrack.artistName;
 
         QString filePath = QDir("..\\..\\music").absoluteFilePath(previousTrack.trackName);
         playMp3File(filePath);
-
-        updateSongQueueTable();
     } else {
         qDebug() << "History stack is empty, cannot go back.";
     }
@@ -257,7 +260,7 @@ void MainWindow::playNextInQueue()
 
         QString currentTrackName = player->source().fileName();
         if (!currentTrackName.isEmpty()) {
-            if (stack.isEmpty() || stack.pop().trackName != currentTrackName) {
+            if (stack.isEmpty() || stack.peek().trackName != currentTrackName) {
                 TrackInfo currentTrack = { currentTrackName, "Unknown Artist" };
                 stack.push(currentTrack);
                 addSongToHistory(currentTrack);
