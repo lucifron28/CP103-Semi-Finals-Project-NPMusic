@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/images/Sublime.jpg);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
     <property name="enabled">
@@ -25,6 +28,11 @@
       <width>1581</width>
       <height>681</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -57,7 +65,9 @@
     border: 2px solid white;
     height: 20px;
     border-radius: 8px;
-}</string>
+}
+
+</string>
       </property>
       <property name="orientation">
        <enum>Qt::Orientation::Horizontal</enum>
@@ -77,6 +87,7 @@
       </property>
       <property name="styleSheet">
        <string notr="true">border-radius: 35px;
+background-image: url(:/images/Vanusa.jpg);
 background-color: white;
 border: 2px solid black;</string>
       </property>
@@ -93,13 +104,19 @@ border: 2px solid black;</string>
         <height>70</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <kerning>true</kerning>
+       </font>
+      </property>
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
       <property name="styleSheet">
        <string notr="true">border-radius: 35px;
+background-image: url(:/images/Vanusa.jpg);
 background-color: white;
-border: 2px solid white;</string>
+border: 2px solid black;</string>
       </property>
       <property name="text">
        <string/>
@@ -107,8 +124,14 @@ border: 2px solid white;</string>
       <property name="autoDefault">
        <bool>false</bool>
       </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
      </widget>
      <widget class="QPushButton" name="pushButtonForward">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -119,6 +142,7 @@ border: 2px solid white;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">border-radius: 35px;
+background-image: url(:/images/Vanusa.jpg);
 background-color: white;
 border: 2px solid black;</string>
       </property>
@@ -137,6 +161,7 @@ border: 2px solid black;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">border-radius: 35px;
+background-image: url(:/images/Vanusa.jpg);
 background-color: white;
 border: 2px solid black;</string>
       </property>
@@ -180,6 +205,9 @@ border: 2px solid black;
         <height>431</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
      </widget>
      <widget class="QSlider" name="verticalSliderVolume">
       <property name="geometry">
@@ -194,22 +222,22 @@ border: 2px solid black;
        <string notr="true">.QSlider {
     min-width: 100px;
     max-width: 100px;
-
 }
 
 .QSlider::groove:vertical {
     border: 1px solid #262626;
     width: 10px;
-    background: #393939;
+	background-color: rgb(50, 82, 168);
     margin: 0 12px;
 }
 
 .QSlider::handle:vertical {
-    background: white;
+	background-image: url(:/images/Vanusa.jpg);
     border: 2px solid black;
     height: 10px;
     margin:  0 -10px;
 	border-radius: 5px;
+	
 }
 </string>
       </property>
@@ -264,14 +292,14 @@ border: 2px solid rgb(190, 3, 252)
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
       <property name="wordWrap">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="labelTrackPhoto">
       <property name="geometry">
        <rect>
         <x>150</x>
-        <y>140</y>
+        <y>130</y>
         <width>371</width>
         <height>291</height>
        </rect>
@@ -281,7 +309,9 @@ border: 2px solid rgb(190, 3, 252)
       </property>
       <property name="styleSheet">
        <string notr="true">image: url(:/images/vinyl.png);
-</string>
+background-image: url(:/images/Moon.jpg);
+border-radius: 125px;
+border: 2px solid rgb(190, 3, 252);</string>
       </property>
       <property name="text">
        <string/>
@@ -293,8 +323,16 @@ border: 2px solid rgb(190, 3, 252)
         <x>1390</x>
         <y>520</y>
         <width>83</width>
-        <height>29</height>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 9pt &quot;Segoe UI&quot;;
+background-image: url(:/images/Vanusa.jpg);
+border-radius:5px;
+border: 2px solid rgb(190, 3, 252);
+
+</string>
       </property>
       <property name="text">
        <string>Edit Artist</string>
@@ -306,8 +344,14 @@ border: 2px solid rgb(190, 3, 252)
         <x>1000</x>
         <y>520</y>
         <width>83</width>
-        <height>29</height>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/Vanusa.jpg);
+font: 700 9pt &quot;Segoe UI&quot;;
+border-radius:5px;
+border: 2px solid rgb(190, 3, 252);</string>
       </property>
       <property name="text">
        <string>Remove</string>
@@ -319,8 +363,16 @@ border: 2px solid rgb(190, 3, 252)
         <x>780</x>
         <y>520</y>
         <width>101</width>
-        <height>29</height>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/Vanusa.jpg);
+font: 700 9pt &quot;Segoe UI&quot;;
+border-radius: 5px;
+border: 2px solid rgb(190, 3, 252);
+
+</string>
       </property>
       <property name="text">
        <string>Clear Queue</string>
@@ -362,35 +414,34 @@ border: 2px solid rgb(190, 3, 252)
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>470</y>
-        <width>351</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/Vanusa.jpg);
-border-radius: 35px;
-border: 2px solid white;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QLabel" name="labelUpNext">
       <property name="geometry">
        <rect>
-        <x>760</x>
-        <y>20</y>
-        <width>301</width>
+        <x>740</x>
+        <y>10</y>
+        <width>351</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/Moon.jpg);
+padding: 5px;
+border-radius: 15px;
+border: 2px solid rgb(190, 3, 252)</string>
+      </property>
       <property name="text">
        <string>Up Next -</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="labelLastSongPlayed">
@@ -402,29 +453,49 @@ border: 2px solid white;</string>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/Moon.jpg);
+padding: 10px;
+border-radius: 15px;
+border: 2px solid rgb(190, 3, 252)</string>
+      </property>
       <property name="text">
        <string>Last Song Played - None</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
      </widget>
-     <zorder>label_2</zorder>
-     <zorder>horizontalSliderDuration</zorder>
-     <zorder>pushButtonStop</zorder>
-     <zorder>pushButtonBack</zorder>
-     <zorder>pushButtonForward</zorder>
-     <zorder>pushButtonPlayPause</zorder>
-     <zorder>pushButtonVolume</zorder>
-     <zorder>tableWidgetSongQueue</zorder>
-     <zorder>verticalSliderVolume</zorder>
-     <zorder>labelCurrentlyPlaying</zorder>
-     <zorder>labelTrackPhoto</zorder>
-     <zorder>pushButtonEditTrackInfo</zorder>
-     <zorder>pushButtonRemoveSong</zorder>
-     <zorder>pushButtonClearQueue</zorder>
-     <zorder>listWidgetAllSongs</zorder>
-     <zorder>labelVolume</zorder>
-     <zorder>label</zorder>
-     <zorder>labelUpNext</zorder>
-     <zorder>labelLastSongPlayed</zorder>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>1180</x>
+        <y>20</y>
+        <width>271</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 12pt &quot;Segoe UI&quot;;
+background-image: url(:/images/Vanusa.jpg);
+border-radius: 15px;
+border: 2px solid rgb(190, 3, 252)</string>
+      </property>
+      <property name="text">
+       <string>Song List</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabHistory">
      <attribute name="title">
@@ -453,7 +524,33 @@ border: 2px solid white;</string>
      <height>25</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <bold>true</bold>
+     <underline>true</underline>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(30, 3, 84);
+</string>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
    <widget class="QMenu" name="menuAdd_Song">
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/images/Sublime.jpg);
+border: 2px solid black;</string>
+    </property>
     <property name="title">
      <string>Menu</string>
     </property>

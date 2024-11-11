@@ -58,11 +58,12 @@ private:
     bool backButtonPressed = false; // New flag to indicate back button pressed
     qint64 Mduration;
     QString buttonStyle = "QPushButton::hover {"
-                              "background-color: rgba(0, 0, 0, 0.5);}"
+                              "background-image: url(:/images/Sublime.jpg);}"
                           "QPushButton {"
+                            "background-image: url(:/images/Vanusa.jpg);"
                             "border-radius: 35px;"
                             "background-color: white;"
-                            "border: 2px solid black;}"
+                            "border: 2px solid rgb(190, 3, 252);}"
                           "QPushButton::pressed {"
                             "background-color: white};";
     QStringList headers;

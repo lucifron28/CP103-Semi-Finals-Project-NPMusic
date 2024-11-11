@@ -28,11 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->pushButtonVolume->setIcon(style()->standardIcon(QStyle::SP_MediaVolume));
     ui->pushButtonVolume->setStyleSheet("QPushButton::hover {"
-                                        "background-color: rgba(0, 0, 0, 0.5);}"
+                                        "background-image: url(:/images/Sublime.jpg);}"
                                         "QPushButton {"
+                                        "background-image: url(:/images/Vanusa.jpg);"
                                         "border-radius: 20px;"
                                         "background-color: white;"
-                                        "border: 2px solid black;}"
+                                        "border: 2px solid rgb(190, 3, 252);}"
                                         "QPushButton::pressed {"
                                         "background-color: white};");
 
@@ -45,6 +46,64 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidgetSongQueue->setColumnCount(2);
     headers << "Track" << "Artist";
     ui->tableWidgetSongQueue->setHorizontalHeaderLabels(headers);
+    ui->tableWidgetSongQueue->setStyleSheet(
+        "QTableWidget {"
+        "    background-image: url(:/images/Lawrencium.jpg);"
+        "    border: 3px solid rgb(121, 77, 255);"
+        "    border-radius: 5px;"
+        "}"
+        "QHeaderView::section {"
+        "    background-color: rgb(137, 0, 235);"
+        "    color: white;"
+        "    padding: 5px;"
+        "    font-weight: bold;"
+        "    font-size: 14px;"
+        "    border: 1px solid #a0a0a0;"
+        "}"
+        "QTableWidget::item {"
+        "    padding: 5px;"
+        "    background-image: url(:/images/Lawrencium.jpg);"
+        "}"
+        "QTableWidget::item:selected {"
+        "    background-image: url(:/images/Sublime.jpg);"
+        "}"
+        "QTableCornerButton::section {"
+        "    background-color: rgb(137, 0, 235);"
+        "}"
+        "QTableWidget::item:hover {"
+        "   background-image: url(:/images/Moon.jpg);"
+        "}"
+        );
+
+    ui->tableWidgetHistory->setStyleSheet(
+        "QTableWidget {"
+        "    background-image: url(:/images/Lawrencium.jpg);"
+        "    border: 3px solid rgb(121, 77, 255);"
+        "    border-radius: 5px;"
+        "}"
+        "QHeaderView::section {"
+        "    background-color: rgb(137, 0, 235);"
+        "    color: white;"
+        "    padding: 5px;"
+        "    font-weight: bold;"
+        "    font-size: 14px;"
+        "    border: 1px solid #a0a0a0;"
+        "}"
+        "QTableWidget::item {"
+        "    padding: 5px;"
+        "    background-image: url(:/images/Lawrencium.jpg);"
+        "}"
+        "QTableWidget::item:selected {"
+        "    background-image: url(:/images/Sublime.jpg);"
+        "}"
+        "QTableCornerButton::section {"
+        "    background-color: rgb(137, 0, 235);"
+        "}"
+        "QTableWidget::item:hover {"
+        "   background-image: url(:/images/Moon.jpg);"
+        "}"
+        );
+
 
     int tableHistoryWidth = ui->tableWidgetHistory->width();
     ui->tableWidgetHistory->setColumnWidth(0, tableHistoryWidth * 0.6);
@@ -58,6 +117,56 @@ MainWindow::MainWindow(QWidget *parent)
     // Ensure listWidgetAllSongs allows item selection
     ui->listWidgetAllSongs->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->listWidgetAllSongs->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->listWidgetAllSongs->setStyleSheet(
+        "QListWidget {"
+        "   background-image: url(:/images/Lawrencium.jpg);"
+        "   border: 2px solid #be03fc;"
+        "   border-radius: 10px;"
+        "   padding: 5px;"
+        "}"
+        "QListWidget::item {"
+        "   padding: 10px;"
+        "   border-bottom: 1px solid #dcdcdc;"
+        "   color: white;"
+        "}"
+        "QListWidget::item:selected {"
+        "   background-image: url(:/images/Sublime.jpg);"
+        "   border-radius: 5px;"
+        "}"
+        "QListWidget::item:hover {"
+        "   background-image: url(:/images/Moon.jpg);"
+        "}"
+        );
+
+    ui->pushButtonClearQueue->setStyleSheet(
+        "QPushButton::hover {"
+        "background-image: url(:/images/Sublime.jpg);}"
+        "QPushButton {"
+        "background-image: url(:/images/Vanusa.jpg);"
+        "font: 700 9pt Segoe UI;"
+        "border-radius: 5px;"
+        "border: 2px solid rgb(190, 3, 252); };"
+        );
+
+    ui->pushButtonRemoveSong->setStyleSheet(
+        "QPushButton::hover {"
+        "background-image: url(:/images/Sublime.jpg);}"
+        "QPushButton {"
+        "background-image: url(:/images/Vanusa.jpg);"
+        "font: 700 9pt Segoe UI;"
+        "border-radius: 5px;"
+        "border: 2px solid rgb(190, 3, 252); };"
+        );
+
+    ui->pushButtonEditTrackInfo->setStyleSheet(
+        "QPushButton::hover {"
+        "background-image: url(:/images/Sublime.jpg);}"
+        "QPushButton {"
+        "background-image: url(:/images/Vanusa.jpg);"
+        "font: 700 9pt Segoe UI;"
+        "border-radius: 5px;"
+        "border: 2px solid rgb(190, 3, 252); };"
+        );
 
     QString musicDirectory = "..\\..\\music";
     listMp3Files(musicDirectory);
