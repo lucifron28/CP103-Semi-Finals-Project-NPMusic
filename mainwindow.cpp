@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     player->setAudioOutput(audioOutput);
+
     qDebug() << "STATUS: " <<player->mediaStatus();
     ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
     ui->pushButtonStop->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
@@ -173,6 +174,9 @@ void MainWindow::handleBackButton()
 
         QString filePath = QDir("..\\..\\music").absoluteFilePath(previousTrack.trackName);
         playMp3File(filePath);
+
+        // Update status bar
+        ui->statusbar->showMessage("Queue: No change. --- Stack: Song '" + previousTrack.trackName + "' popped.");
     } else {
         qDebug() << "History stack is empty, cannot go back.";
     }
@@ -235,6 +239,9 @@ void MainWindow::addSongToQueue(QListWidgetItem *item)
 
     TrackInfo trackInfo = {track, artist};
     queue.enqueue(trackInfo);
+
+    // Update status bar
+    ui->statusbar->showMessage("Queue: Song '" + track + "' enqueued. --- Stack: No change.");
 }
 
 void MainWindow::playNextInQueue()
@@ -260,6 +267,9 @@ void MainWindow::playNextInQueue()
                 TrackInfo currentTrack = { currentTrackName, "Unknown Artist" };
                 stack.push(currentTrack);
                 addSongToHistory(currentTrack);
+
+                // Update status bar
+                ui->statusbar->showMessage("Queue: No change. --- Stack: Song '" + currentTrack.trackName + "' pushed.");
             }
         }
 
@@ -270,6 +280,9 @@ void MainWindow::playNextInQueue()
             QString filePath = QDir("..\\..\\music").absoluteFilePath(nextTrack.trackName);
             playMp3File(filePath);
             updateSongQueueTable();
+
+            // Update status bar
+            ui->statusbar->showMessage("Queue: Song '" + nextTrack.trackName + "' dequeued. --- Stack: No change.");
         } else {
             player->stop();
             ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -293,6 +306,21 @@ void MainWindow::updateCurrentlyPlayingLabel()
 {
     QString currentTrack = player->source().fileName();
     ui->labelCurrentlyPlaying->setText(currentTrack);
+
+    if (!queue.isEmpty()) {
+        ui->labelUpNext->setText("Up Next - " + queue.front().trackName + " - " + queue.front().artistName);
+    } else {
+        ui->labelUpNext->setText("Up Next - None");
+    }
+
+    if (!stack.isEmpty()) {
+        TrackInfo lastTrack = stack.peek();
+        ui->labelLastSongPlayed->setText("Last Song Played - " + lastTrack.trackName + " - " + lastTrack.artistName);
+    } else {
+        ui->labelLastSongPlayed->setText("Last Song Played - None");
+    }
+
+    updateSongQueueTable();
 }
 
 void MainWindow::updateSongQueueTable()
@@ -360,7 +388,7 @@ void MainWindow::addSongToHistory(const TrackInfo &trackInfo)
 
 void MainWindow::handlePushButtonEditTrackInfo()
 {
-    
+
 }
 
 void MainWindow::handleRemoveSongFromQueue()
@@ -372,6 +400,9 @@ void MainWindow::handleRemoveSongFromQueue()
         TrackInfo trackInfo = {track, artist};
         queue.remove(trackInfo);
         ui->tableWidgetSongQueue->removeRow(currentRow);
+
+        // Update status bar
+        ui->statusbar->showMessage("Queue: Song '" + track + "' removed. --- Stack: No change.");
     }
 }
 
@@ -379,12 +410,18 @@ void MainWindow::clearQueue()
 {
     queue.clear();
     updateSongQueueTable();
+
+    // Update status bar
+    ui->statusbar->showMessage("Queue: Cleared. --- Stack: No change.");
 }
 
 void MainWindow::on_actionClear_History_triggered()
 {
     stack.clear();
     ui->tableWidgetHistory->setRowCount(0);
+
+    // Update status bar
+    ui->statusbar->showMessage("Queue: No change. --- Stack: History cleared.");
 }
 
 void MainWindow::handleAllSongsCellChanged(int row)
@@ -425,7 +462,7 @@ void MainWindow::editList()
 {
     QListWidgetItem *currentItem = ui->listWidgetAllSongs->currentItem();
     if (currentItem) {
-        QString track = currentItem->data(Qt::UserRole + 1).toString(); // Get the original filename
+        QString track = currentItem->data(Qt::UserRole + 1).toString();
         QString artist = currentItem->data(Qt::UserRole).toString();
 
         bool ok;
@@ -435,7 +472,7 @@ void MainWindow::editList()
         if (ok && !newArtist.isEmpty()) {
             currentItem->setData(Qt::UserRole, newArtist);
             currentItem->setText(track + " - " + newArtist);
-            handleAllSongsCellChanged(ui->listWidgetAllSongs->row(currentItem)); // Ensure history table updates
+            handleAllSongsCellChanged(ui->listWidgetAllSongs->row(currentItem));
         }
     }
 }
