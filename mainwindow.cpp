@@ -10,16 +10,23 @@ MainWindow::MainWindow(QWidget *parent)
     , player(new QMediaPlayer(this))
     , audioOutput(new QAudioOutput(this))
     , stack()
-    , queue() // Add this flag
+    , queue()
 {
     ui->setupUi(this);
+    this->setWindowTitle("NP Music");
+    this->setWindowState(Qt::WindowMaximized);
+
     player->setAudioOutput(audioOutput);
 
     qDebug() << "STATUS: " <<player->mediaStatus();
     ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
     ui->pushButtonStop->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
-    ui->pushButtonBack->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));
-    ui->pushButtonForward->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));
+    ui->pushButtonBack->setIcon(style()->standardIcon(QStyle::SP_MediaSkipBackward));
+    ui->pushButtonForward->setIcon(style()->standardIcon(QStyle::SP_MediaSkipForward));
+    ui->pushButtonPlayPause->setIconSize(QSize(25, 25));
+    ui->pushButtonStop->setIconSize(QSize(25, 25));
+    ui->pushButtonBack->setIconSize(QSize(25, 25));
+    ui->pushButtonForward->setIconSize(QSize(25, 25));
 
     ui->pushButtonPlayPause->setStyleSheet(buttonStyle);
     ui->pushButtonStop->setStyleSheet(buttonStyle);
@@ -63,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
         "QTableWidget::item {"
         "    padding: 5px;"
         "    background-image: url(:/images/Lawrencium.jpg);"
+        "    color: white;"
         "}"
         "QTableWidget::item:selected {"
         "    background-image: url(:/images/Sublime.jpg);"
@@ -92,6 +100,7 @@ MainWindow::MainWindow(QWidget *parent)
         "QTableWidget::item {"
         "    padding: 5px;"
         "    background-image: url(:/images/Lawrencium.jpg);"
+        "    color: white;"
         "}"
         "QTableWidget::item:selected {"
         "    background-image: url(:/images/Sublime.jpg);"
@@ -277,14 +286,14 @@ void MainWindow::handleVolumeButton()
 void MainWindow::handleBackButton()
 {
     if (!stack.isEmpty()) {
-        backButtonPressed = true; // Set the flag when back button is pressed
+        backButtonPressed = true;
         TrackInfo previousTrack = stack.pop();
         qDebug() << "Popped track from history:" << previousTrack.trackName << ", Artist:" << previousTrack.artistName;
 
         QString filePath = QDir("..\\..\\music").absoluteFilePath(previousTrack.trackName);
+        ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
         playMp3File(filePath);
 
-        // Update status bar
         ui->statusbar->showMessage("Queue: No change. --- Stack: Song '" + previousTrack.trackName + "' popped.");
     } else {
         qDebug() << "History stack is empty, cannot go back.";
@@ -304,6 +313,10 @@ void MainWindow::handleStopButton()
 void MainWindow::handleForwardButton()
 {
     qDebug() << "Forward button pressed";
+    if (paused == true) {
+        paused = false;
+        ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+    }
     playNextInQueue();
 }
 
@@ -373,7 +386,15 @@ void MainWindow::playNextInQueue()
         QString currentTrackName = player->source().fileName();
         if (!currentTrackName.isEmpty()) {
             if (stack.isEmpty() || stack.peek().trackName != currentTrackName) {
-                TrackInfo currentTrack = { currentTrackName, "Unknown Artist" };
+                QString currentArtist = "Unknown Artist";
+                for (int i = 0; i < ui->listWidgetAllSongs->count(); ++i) {
+                    QListWidgetItem *item = ui->listWidgetAllSongs->item(i);
+                    if (item->data(Qt::UserRole + 1).toString() == currentTrackName) {
+                        currentArtist = item->data(Qt::UserRole).toString();
+                        break;
+                    }
+                }
+                TrackInfo currentTrack = { currentTrackName, currentArtist };
                 stack.push(currentTrack);
                 addSongToHistory(currentTrack);
 
@@ -533,10 +554,10 @@ void MainWindow::on_actionClear_History_triggered()
     ui->statusbar->showMessage("Queue: No change. --- Stack: History cleared.");
 }
 
-void MainWindow::handleAllSongsCellChanged(int row)
+void MainWindow::handleAllSongsCellChanged(QListWidgetItem *item)
 {
-    QString track = ui->listWidgetAllSongs->item(row)->text();
-    QString artist = ui->listWidgetAllSongs->item(row)->data(Qt::UserRole).toString();
+    QString track = item->data(Qt::UserRole + 1).toString();
+    QString artist = item->data(Qt::UserRole).toString();
 
     // Update Song Queue Table
     for (int i = 0; i < ui->tableWidgetSongQueue->rowCount(); ++i) {
@@ -581,7 +602,7 @@ void MainWindow::editList()
         if (ok && !newArtist.isEmpty()) {
             currentItem->setData(Qt::UserRole, newArtist);
             currentItem->setText(track + " - " + newArtist);
-            handleAllSongsCellChanged(ui->listWidgetAllSongs->row(currentItem));
+            handleAllSongsCellChanged(currentItem); // Correct argument type
         }
     }
 }

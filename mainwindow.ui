@@ -38,7 +38,8 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/images/background.jpeg); </string>
+     <string notr="true">background-image: url(:/images/background.jpeg); 
+background-color: black;</string>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -59,14 +60,23 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>OpenHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">QSlider::handle:horizontal {
 	background-color: rgb(192, 57, 91);
     border: 2px solid white;
-    height: 20px;
-    border-radius: 8px;
+    height: 13px;
+	width: 13px;
+    border-radius: 5px;
+	margin:  -5px -5px;
 }
 
+QSlider::groove:horizontal {
+	background-color: rgb(50, 82, 168);
+	height: 5px;
+}
 </string>
       </property>
       <property name="orientation">
@@ -81,6 +91,9 @@
         <width>71</width>
         <height>70</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
@@ -108,6 +121,9 @@ border: 2px solid black;</string>
        <font>
         <kerning>true</kerning>
        </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
@@ -140,6 +156,9 @@ border: 2px solid black;</string>
         <height>70</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">border-radius: 35px;
 background-image: url(:/images/Vanusa.jpg);
@@ -159,6 +178,9 @@ border: 2px solid black;</string>
         <height>70</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">border-radius: 35px;
 background-image: url(:/images/Vanusa.jpg);
@@ -177,6 +199,9 @@ border: 2px solid black;</string>
         <width>41</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
@@ -206,7 +231,7 @@ border: 2px solid black;
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">color: white;</string>
       </property>
      </widget>
      <widget class="QSlider" name="verticalSliderVolume">
@@ -217,6 +242,9 @@ border: 2px solid black;
         <width>100</width>
         <height>151</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>OpenHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
        <string notr="true">.QSlider {
@@ -326,6 +354,9 @@ border: 2px solid rgb(190, 3, 252);</string>
         <height>31</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">font: 700 9pt &quot;Segoe UI&quot;;
 background-image: url(:/images/Vanusa.jpg);
@@ -347,6 +378,9 @@ border: 2px solid rgb(190, 3, 252);
         <height>31</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/Vanusa.jpg);
 font: 700 9pt &quot;Segoe UI&quot;;
@@ -365,6 +399,9 @@ border: 2px solid rgb(190, 3, 252);</string>
         <width>101</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/Vanusa.jpg);
@@ -391,11 +428,14 @@ border: 2px solid rgb(190, 3, 252);
      <widget class="QLabel" name="labelVolume">
       <property name="geometry">
        <rect>
-        <x>650</x>
-        <y>270</y>
+        <x>660</x>
+        <y>280</y>
         <width>41</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;</string>
       </property>
       <property name="text">
        <string/>
@@ -521,7 +561,7 @@ border: 2px solid rgb(190, 3, 252)</string>
      <x>0</x>
      <y>0</y>
      <width>1900</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="font">
@@ -535,7 +575,11 @@ border: 2px solid rgb(190, 3, 252)</string>
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(30, 3, 84);
+    <string notr="true">QMenuBar {
+	color: rgb(30, 3, 84);
+	border: 2px solid rgb(190, 3, 252)
+}
+
 </string>
    </property>
    <property name="defaultUp">
@@ -548,8 +592,7 @@ border: 2px solid rgb(190, 3, 252)</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/images/Sublime.jpg);
-border: 2px solid black;</string>
+     <string notr="true">border: 2px solid rgb(190, 3, 252)</string>
     </property>
     <property name="title">
      <string>Menu</string>

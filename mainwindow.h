@@ -43,7 +43,7 @@ private slots:
     void handlePushButtonEditTrackInfo();
     void handleRemoveSongFromQueue();
     void clearQueue();
-    void handleAllSongsCellChanged(int row);
+    void handleAllSongsCellChanged(QListWidgetItem *item);
     void on_actionSelect_File_mp3_triggered();
     void editList();
 
