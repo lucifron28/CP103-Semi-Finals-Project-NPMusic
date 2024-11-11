@@ -294,6 +294,21 @@ void MainWindow::updateCurrentlyPlayingLabel()
 {
     QString currentTrack = player->source().fileName();
     ui->labelCurrentlyPlaying->setText(currentTrack);
+
+    if (!queue.isEmpty()) {
+        ui->labelUpNext->setText("Up Next - " + queue.front().trackName + " - " + queue.front().artistName);
+    } else {
+        ui->labelUpNext->setText("Up Next - None");
+    }
+
+    if (!stack.isEmpty()) {
+        TrackInfo lastTrack = stack.peek();
+        ui->labelLastSongPlayed->setText("Last Song Played - " + lastTrack.trackName + " - " + lastTrack.artistName);
+    } else {
+        ui->labelLastSongPlayed->setText("Last Song Played - None");
+    }
+
+    updateSongQueueTable();
 }
 
 void MainWindow::updateSongQueueTable()
@@ -361,7 +376,7 @@ void MainWindow::addSongToHistory(const TrackInfo &trackInfo)
 
 void MainWindow::handlePushButtonEditTrackInfo()
 {
-    
+
 }
 
 void MainWindow::handleRemoveSongFromQueue()

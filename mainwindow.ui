@@ -23,7 +23,7 @@
       <x>0</x>
       <y>10</y>
       <width>1581</width>
-      <height>641</height>
+      <height>681</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -174,8 +174,8 @@ border: 2px solid black;
      <widget class="QTableWidget" name="tableWidgetSongQueue">
       <property name="geometry">
        <rect>
-        <x>720</x>
-        <y>10</y>
+        <x>730</x>
+        <y>80</y>
         <width>371</width>
         <height>431</height>
        </rect>
@@ -290,8 +290,8 @@ border: 2px solid rgb(190, 3, 252)
      <widget class="QPushButton" name="pushButtonEditTrackInfo">
       <property name="geometry">
        <rect>
-        <x>1380</x>
-        <y>450</y>
+        <x>1390</x>
+        <y>520</y>
         <width>83</width>
         <height>29</height>
        </rect>
@@ -303,8 +303,8 @@ border: 2px solid rgb(190, 3, 252)
      <widget class="QPushButton" name="pushButtonRemoveSong">
       <property name="geometry">
        <rect>
-        <x>990</x>
-        <y>450</y>
+        <x>1000</x>
+        <y>520</y>
         <width>83</width>
         <height>29</height>
        </rect>
@@ -316,8 +316,8 @@ border: 2px solid rgb(190, 3, 252)
      <widget class="QPushButton" name="pushButtonClearQueue">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>450</y>
+        <x>780</x>
+        <y>520</y>
         <width>101</width>
         <height>29</height>
        </rect>
@@ -329,8 +329,8 @@ border: 2px solid rgb(190, 3, 252)
      <widget class="QListWidget" name="listWidgetAllSongs">
       <property name="geometry">
        <rect>
-        <x>1150</x>
-        <y>10</y>
+        <x>1160</x>
+        <y>80</y>
         <width>321</width>
         <height>431</height>
        </rect>
@@ -380,6 +380,32 @@ border: 2px solid white;</string>
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="labelUpNext">
+      <property name="geometry">
+       <rect>
+        <x>760</x>
+        <y>20</y>
+        <width>301</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Up Next -</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelLastSongPlayed">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>570</y>
+        <width>541</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Last Song Played - None</string>
+      </property>
+     </widget>
      <zorder>label_2</zorder>
      <zorder>horizontalSliderDuration</zorder>
      <zorder>pushButtonStop</zorder>
@@ -397,6 +423,8 @@ border: 2px solid white;</string>
      <zorder>listWidgetAllSongs</zorder>
      <zorder>labelVolume</zorder>
      <zorder>label</zorder>
+     <zorder>labelUpNext</zorder>
+     <zorder>labelLastSongPlayed</zorder>
     </widget>
     <widget class="QWidget" name="tabHistory">
      <attribute name="title">
