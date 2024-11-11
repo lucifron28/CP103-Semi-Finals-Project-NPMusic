@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     player->setAudioOutput(audioOutput);
+
     qDebug() << "STATUS: " <<player->mediaStatus();
     ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
     ui->pushButtonStop->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
