@@ -177,7 +177,7 @@ MainWindow::MainWindow(QWidget *parent)
         "border: 2px solid rgb(190, 3, 252); };"
         );
 
-    QString musicDirectory = "..\\..\\music";
+    QString musicDirectory = "music";
     listMp3Files(musicDirectory);
 
     ui->verticalSliderVolume->setMinimum(1);
@@ -290,7 +290,7 @@ void MainWindow::handleBackButton()
         TrackInfo previousTrack = stack.pop();
         qDebug() << "Popped track from history:" << previousTrack.trackName << ", Artist:" << previousTrack.artistName;
 
-        QString filePath = QDir("..\\..\\music").absoluteFilePath(previousTrack.trackName);
+        QString filePath = QDir("music").absoluteFilePath(previousTrack.trackName);
         ui->pushButtonPlayPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
         playMp3File(filePath);
 
@@ -407,7 +407,7 @@ void MainWindow::playNextInQueue()
             TrackInfo nextTrack = queue.dequeue();
             qDebug() << "Dequeued track:" << nextTrack.trackName << ", Artist:" << nextTrack.artistName;
 
-            QString filePath = QDir("..\\..\\music").absoluteFilePath(nextTrack.trackName);
+            QString filePath = QDir("music").absoluteFilePath(nextTrack.trackName);
             playMp3File(filePath);
             updateSongQueueTable();
 
@@ -491,7 +491,7 @@ void MainWindow::on_actionSelect_File_mp3_triggered()
 void MainWindow::addMp3FileToDirectory(const QString &filePath)
 {
     QString fileName = QFileInfo(filePath).fileName();
-    QString destinationPath = QDir("..\\..\\music").absoluteFilePath(fileName);
+    QString destinationPath = QDir("music").absoluteFilePath(fileName);
 
     qDebug() << "Attempting to copy file to: " << destinationPath;
 
