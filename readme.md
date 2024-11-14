@@ -29,7 +29,7 @@ This project is a Music Player Application that demonstrates the use of stacks a
 ### Steps
 
 1. **Download the Released Version**:
-   - Go to the [Release](https://github.com/lucifron28/CP103-Semi-Finals-Project-NPMusic/blob/main/build/Desktop_Qt_6_7_2_MinGW_64_bit-Release/release/npmusic.zip) page of the repository.
+   - Go to the [Release](https://github.com/lucifron28/CP103-Semi-Finals-Project-NPMusic/blob/main/build/Desktop_Qt_6_7_2_MinGW_64_bit-Release/release/) page of the repository.
    - Download the latest release zip file.
 
 2. **Extract the Zip File**:
@@ -52,8 +52,8 @@ If you want to build the project from source, follow these steps:
 
 1. **Clone the Repository**:
    ```sh
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/lucifron28/CP103-Semi-Finals-Project-NPMusic.git
+   cd CP103-Semi-Finals-Project-NPMusic
    ```
 
 2. **Open the Project in Qt Creator**:
