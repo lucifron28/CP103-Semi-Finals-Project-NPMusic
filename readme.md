@@ -55,7 +55,7 @@ If you want to build the project from source, follow these steps:
    git clone https://github.com/lucifron28/CP103-Semi-Finals-Project-NPMusic.git
    cd CP103-Semi-Finals-Project-NPMusic
    ```
-
+cp
 2. **Open the Project in Qt Creator**:
    - Launch Qt Creator.
    - Open the project by selecting the `.pro` file in the cloned repository.
